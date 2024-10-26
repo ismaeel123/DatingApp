@@ -1,0 +1,13 @@
+<h4>Internal Server Error</h4>
+@if (error) {
+    <h5 class="text-danger">Error: {{error.message}}</h5>
+    <p class="font-weight-bold">di mesh moshkltna yabro mlnash d3wa</p>
+    <p>e3mel el aaty</p>
+    <ol>
+        <li>efta7 chrome we shoof el request el darab fil network tab</li>
+        <li>shoof el url bta3 el request</li>
+        <li>e3mlo fi postman lw darab yb2a mesh angular 5ales sba7 el foll</li>
+    </ol>
+    <p class="font-weight-bold">dawwat el stack trace bta3 el 7asal shof awwel streen keda</p>
+    <code class="mt-5" style="background-color: whitesmoke;">{{error.details}}</code>
+}
