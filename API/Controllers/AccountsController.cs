@@ -17,7 +17,8 @@ public class AccountController (DataContext context, ITokenService tokenService)
     public async Task<ActionResult<UserDTO>> Register (RegisterDTO registerDTO)
     {
         if (await UserExists(registerDTO.UserName)) return BadRequest("Username already taken");
-
+        return Ok();
+        /*
         using var hmac= new HMACSHA256();
 
         var user= new AppUser 
@@ -36,7 +37,7 @@ public class AccountController (DataContext context, ITokenService tokenService)
             Username= user.UserName,
             Token = tokenService.CreateToken(user)
         };
-
+        */
 
     }
     private async Task <bool> UserExists (string username)
@@ -51,7 +52,7 @@ public class AccountController (DataContext context, ITokenService tokenService)
         if (user ==null)
             return Unauthorized ("invalid username");
 
-        using var hmac = new HMACSHA256(user.PasswordSalt);
+        using var hmac = new HMACSHA512(user.PasswordSalt);
 
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
 

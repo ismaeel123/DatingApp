@@ -24,4 +24,19 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using var scope =app.Services.CreateScope();
+var services =scope.ServiceProvider;
+try
+{
+    var context =services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    var Logger = services.GetRequiredService<ILogger<Program>> ();
+    Logger.LogError(ex,"fi moshkela 7asalet fil database ya m3llem");
+    
+}
+
 app.Run();
