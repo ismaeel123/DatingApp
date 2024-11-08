@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { User } from '../_Models/User';
 import { map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AccountsService {
   private http = inject(HttpClient)
-  baseURL ='https://localhost:5001/api/'
+  baseURL = environment.apiUrl
   CurrentUser = signal <User | null> (null)
 
   login (model:any)
@@ -17,8 +19,7 @@ export class AccountsService {
       map(user =>{
         if (user)
         {
-          localStorage.setItem('user',JSON.stringify(user))
-          this.CurrentUser.set(user)
+          this.setCurrentUser(user)
         }
       })
     )
@@ -30,8 +31,7 @@ export class AccountsService {
       map(user =>{
         if (user)
         {
-          localStorage.setItem('user',JSON.stringify(user))
-          this.CurrentUser.set(user)
+          this.setCurrentUser(user)
         }
         return user;
       })
@@ -42,6 +42,12 @@ export class AccountsService {
   {
     localStorage.removeItem('user')
     this.CurrentUser.set(null)
+  }
+
+  setCurrentUser (user: User)
+  {
+    localStorage.setItem('user',JSON.stringify(user))
+    this.CurrentUser.set(user)
   }
   
 }
