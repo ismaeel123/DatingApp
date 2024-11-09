@@ -11,7 +11,7 @@ import { Photo } from '../_Models/Photo';
 export class MembersService {
   private http = inject (HttpClient)
   private baseUrl = environment.apiUrl 
-  members = signal <Member[]> ([])
+  members = signal <Member[]> ([]);
 
   getMembers(){
     return this.http.get<Member[]> (this.baseUrl+'users').subscribe({

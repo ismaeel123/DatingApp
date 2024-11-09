@@ -57,6 +57,9 @@ public class UsersController(IUserRepository repository, IMapper mapper, IPhotoS
         if (result.Error != null) return BadRequest ("fi 7aga ghalat fi cloudinary");
 
         var photo = new Photo {Url= result.SecureUrl.AbsoluteUri, PublicId = result.PublicId};
+        
+        if (user.Photos.Count==0)
+            photo.IsMain=true;
 
         user.Photos.Add(photo);
 
